@@ -8,8 +8,8 @@ self.__precacheManifest = [
     "url": "/react-native-elements-app/static/js/runtime~app.5a6d8131.js"
   },
   {
-    "revision": "3f6d9d38b112a8537947",
-    "url": "/react-native-elements-app/static/js/2.f1727d6e.chunk.js"
+    "revision": "282b711e21f5477c08d2",
+    "url": "/react-native-elements-app/static/js/2.cce71dc0.chunk.js"
   },
   {
     "revision": "004c2bbb035d8d06bb830efc4673c886",
@@ -164,19 +164,19 @@ self.__precacheManifest = [
     "url": "/react-native-elements-app/serve.json"
   },
   {
-    "revision": "48c7ed4e7da9792af288a60d7242d615",
-    "url": "/react-native-elements-app/expo-service-worker.js"
-  },
-  {
     "revision": "a7d4c54d8fd0e0dadffac4156e3a0fbb",
     "url": "/react-native-elements-app/favicon.png"
   },
   {
-    "revision": "86771b4325de382c56497c839d8b3d6d",
+    "revision": "48c7ed4e7da9792af288a60d7242d615",
+    "url": "/react-native-elements-app/expo-service-worker.js"
+  },
+  {
+    "revision": "4397dc0c604c8f40704439feaab36e02",
     "url": "/react-native-elements-app/index.html"
   },
   {
-    "revision": "3d6ef88a4a121eddf3bbca160887606c",
+    "revision": "56239d43beb07d91c53de3dad298aebf",
     "url": "/react-native-elements-app/manifest.json"
   },
   {

@@ -5,8 +5,37 @@
   "display": "standalone",
   "lang": "en",
   "name": "react-native-elements-app",
-  "orientation": "any",
+  "orientation": "portrait",
   "short_name": "react-native-elements-app",
   "start_url": ".",
-  "theme_color": "#cccccc"
+  "theme_color": "#cccccc",
+  "related_applications": [
+    {
+      "platform": "itunes",
+      "id": "com.hanfubj.detect"
+    },
+    {
+      "platform": "play",
+      "url": "http://play.google.com/store/apps/details?id=com.hanfubj.detect",
+      "id": "com.hanfubj.detect"
+    }
+  ],
+  "prefer_related_applications": true,
+  "icons": [
+    {
+      "src": "/react-native-elements-app/pwa/chrome-icon/chrome-icon-144.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/react-native-elements-app/pwa/chrome-icon/chrome-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/react-native-elements-app/pwa/chrome-icon/chrome-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
