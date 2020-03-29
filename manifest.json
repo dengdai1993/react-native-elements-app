@@ -1,0 +1,12 @@
+{
+  "background_color": "#ffffff",
+  "description": "A demo app for React Native Elements UI Library",
+  "dir": "auto",
+  "display": "standalone",
+  "lang": "en",
+  "name": "react-native-elements-app",
+  "orientation": "any",
+  "short_name": "react-native-elements-app",
+  "start_url": ".",
+  "theme_color": "#cccccc"
+}

@@ -14,9 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/react-native-elements-app/precache-manifest.98276fd5add9cc86576fdda2608ec4f6.js"
+  "/react-native-elements-app/precache-manifest.a531c0615e9f6ce98a6d65d044df7736.js"
 );
 
+workbox.skipWaiting();
 workbox.clientsClaim();
 
 /**
@@ -30,5 +31,7 @@ workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
 workbox.routing.registerNavigationRoute("/react-native-elements-app/index.html", {
   
-  blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
+  blacklist: [/^\/_/,/\/[^/]+\.[^/]+$/],
 });
+
+workbox.routing.registerRoute(/^https?.*/, workbox.strategies.networkFirst({ "cacheName":"offlineCache", plugins: [new workbox.expiration.Plugin({"maxEntries":200,"purgeOnQuotaError":false})] }), 'GET');
