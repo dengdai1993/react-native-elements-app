@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "6990b43bac42272ef87a",
-    "url": "/react-native-elements-app/static/js/app.bfef8ffd.chunk.js"
+    "revision": "609f3c0bdfeac6a4397b",
+    "url": "/react-native-elements-app/static/js/app.5aaabcde.chunk.js"
   },
   {
     "revision": "e8924d4aa31e118d0ecd",
@@ -160,19 +160,19 @@ self.__precacheManifest = [
     "url": "/react-native-elements-app/./fonts/FontAwesome5_Solid.ttf"
   },
   {
-    "revision": "a7d4c54d8fd0e0dadffac4156e3a0fbb",
-    "url": "/react-native-elements-app/favicon.png"
+    "revision": "48c7ed4e7da9792af288a60d7242d615",
+    "url": "/react-native-elements-app/expo-service-worker.js"
   },
   {
     "revision": "d0c694b562b2208635f250762cd7fc79",
     "url": "/react-native-elements-app/serve.json"
   },
   {
-    "revision": "48c7ed4e7da9792af288a60d7242d615",
-    "url": "/react-native-elements-app/expo-service-worker.js"
+    "revision": "a7d4c54d8fd0e0dadffac4156e3a0fbb",
+    "url": "/react-native-elements-app/favicon.png"
   },
   {
-    "revision": "8a87721f1cf38961e3e62d19e4b091c6",
+    "revision": "8a7afaedfdb889074f0440afc9ffa1e1",
     "url": "/react-native-elements-app/index.html"
   },
   {
