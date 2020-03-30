@@ -160,12 +160,12 @@ self.__precacheManifest = [
     "url": "/react-native-elements-app/./fonts/FontAwesome5_Solid.ttf"
   },
   {
-    "revision": "48c7ed4e7da9792af288a60d7242d615",
-    "url": "/react-native-elements-app/expo-service-worker.js"
-  },
-  {
     "revision": "d0c694b562b2208635f250762cd7fc79",
     "url": "/react-native-elements-app/serve.json"
+  },
+  {
+    "revision": "48c7ed4e7da9792af288a60d7242d615",
+    "url": "/react-native-elements-app/expo-service-worker.js"
   },
   {
     "revision": "a7d4c54d8fd0e0dadffac4156e3a0fbb",
