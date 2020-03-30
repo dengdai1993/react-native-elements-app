@@ -1,7 +1,7 @@
 self.__precacheManifest = [
   {
-    "revision": "0eec859654f02b76ada8",
-    "url": "/react-native-elements-app/static/js/app.1734ef72.chunk.js"
+    "revision": "6990b43bac42272ef87a",
+    "url": "/react-native-elements-app/static/js/app.bfef8ffd.chunk.js"
   },
   {
     "revision": "e8924d4aa31e118d0ecd",
@@ -172,7 +172,7 @@ self.__precacheManifest = [
     "url": "/react-native-elements-app/favicon.png"
   },
   {
-    "revision": "3139f3e197d2ad098068b617ebf3547d",
+    "revision": "c54a1a3b652d86bba14eeeeea639cc7c",
     "url": "/react-native-elements-app/index.html"
   },
   {
