@@ -160,6 +160,10 @@ self.__precacheManifest = [
     "url": "/react-native-elements-app/./fonts/FontAwesome5_Solid.ttf"
   },
   {
+    "revision": "a7d4c54d8fd0e0dadffac4156e3a0fbb",
+    "url": "/react-native-elements-app/favicon.png"
+  },
+  {
     "revision": "d0c694b562b2208635f250762cd7fc79",
     "url": "/react-native-elements-app/serve.json"
   },
@@ -168,11 +172,7 @@ self.__precacheManifest = [
     "url": "/react-native-elements-app/expo-service-worker.js"
   },
   {
-    "revision": "a7d4c54d8fd0e0dadffac4156e3a0fbb",
-    "url": "/react-native-elements-app/favicon.png"
-  },
-  {
-    "revision": "c54a1a3b652d86bba14eeeeea639cc7c",
+    "revision": "8a87721f1cf38961e3e62d19e4b091c6",
     "url": "/react-native-elements-app/index.html"
   },
   {
