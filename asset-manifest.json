@@ -1,11 +1,11 @@
 {
   "files": {
-    "app.js": "/react-native-elements-app/static/js/app.48b2b489.chunk.js",
-    "app.js.map": "/react-native-elements-app/static/js/app.48b2b489.chunk.js.map",
+    "app.js": "/react-native-elements-app/static/js/app.ac9cd588.chunk.js",
+    "app.js.map": "/react-native-elements-app/static/js/app.ac9cd588.chunk.js.map",
     "runtime~app.js": "/react-native-elements-app/static/js/runtime~app.5a6d8131.js",
     "runtime~app.js.map": "/react-native-elements-app/static/js/runtime~app.5a6d8131.js.map",
-    "static/js/2.74fe1b6f.chunk.js": "/react-native-elements-app/static/js/2.74fe1b6f.chunk.js",
-    "static/js/2.74fe1b6f.chunk.js.map": "/react-native-elements-app/static/js/2.74fe1b6f.chunk.js.map",
+    "static/js/2.76045742.chunk.js": "/react-native-elements-app/static/js/2.76045742.chunk.js",
+    "static/js/2.76045742.chunk.js.map": "/react-native-elements-app/static/js/2.76045742.chunk.js.map",
     "fonts/AntDesign.ttf": "/react-native-elements-app/./fonts/AntDesign.ttf",
     "fonts/Entypo.ttf": "/react-native-elements-app/./fonts/Entypo.ttf",
     "fonts/Feather.ttf": "/react-native-elements-app/./fonts/Feather.ttf",
@@ -50,7 +50,7 @@
   },
   "entrypoints": [
     "static/js/runtime~app.5a6d8131.js",
-    "static/js/2.74fe1b6f.chunk.js",
-    "static/js/app.48b2b489.chunk.js"
+    "static/js/2.76045742.chunk.js",
+    "static/js/app.ac9cd588.chunk.js"
   ]
 }
