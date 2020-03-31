@@ -3,7 +3,7 @@
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker
-      .register('/react-native-elements-app/expo-service-worker.js', { scope: '/react-native-elements-app/' })
+      .register('/expo-service-worker.js', { scope: '/' })
       .then(function(info) {
         // console.info('Registered service-worker', info);
       })
