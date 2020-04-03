@@ -4,10 +4,12 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { Icon } from 'react-native-elements';
 
 import HomeTabs from './HomeTabs';
+import SettingsTab from "../tabs/settings";
 
 const HomeNavigator = createStackNavigator(
   {
     Home: HomeTabs,
+    ProductDetail: SettingsTab,
   },
   {
     headerMode: 'none',

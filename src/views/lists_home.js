@@ -70,38 +70,24 @@ const list1 = [
 
 const list2 = [
   {
-    name: 'Amy Farha',
-    avatar_url:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-    subtitle: 'Vice President',
-    linearGradientColors: ['#FF9800', '#F44336'],
+    name: '老店',
+    count: 1,
   },
   {
-    name: 'Chris Jackson',
-    avatar_url:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-    subtitle: 'Vice Chairman',
-    linearGradientColors: ['#3F51B5', '#2196F3'],
+    name: '放心购',
+    count: 10,
   },
   {
-    name: 'Amanda Martin',
-    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
-    subtitle: 'CEO',
-    linearGradientColors: ['#FFD600', '#FF9800'],
+    name: '性价比高',
+    count: 10,
   },
   {
-    name: 'Christy Thomas',
-    avatar_url:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/kfriedson/128.jpg',
-    subtitle: 'Lead Developer',
-    linearGradientColors: ['#4CAF50', '#8BC34A'],
+    name: '版型靠谱',
+    count: 10,
   },
   {
-    name: 'Melissa Jones',
-    avatar_url:
-      'https://s3.amazonaws.com/uifaces/faces/twitter/nuraika/128.jpg',
-    subtitle: 'CTO',
-    linearGradientColors: ['#F44336', '#E91E63'],
+    name: '售后有保障',
+    count: 10,
   },
 ];
 

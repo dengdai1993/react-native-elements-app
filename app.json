@@ -16,9 +16,13 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.hanfubj.detect"
+    },
+    "android": {
+      "package": "com.hanfubj.detect"
     }
   }
 }

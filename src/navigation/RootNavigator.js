@@ -1,15 +1,16 @@
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 
-import HomeNavigator from './HomeNavigator';
 import DrawerNavigator from './DrawerNavigator';
+import ProductDetail from '../views/ProductDetail';
 
 const AuthNavigator = createSwitchNavigator(
-  {
-    AuthHomeNavigator: DrawerNavigator,
-  },
-  {
-    initialRouteName: 'AuthHomeNavigator',
-  }
+    {
+        AuthHomeNavigator: DrawerNavigator,
+        ProductDetailRoute: {screen: ProductDetail},
+    },
+    {
+        initialRouteName: 'AuthHomeNavigator',
+    }
 );
 
 const RootNavigator = createAppContainer(AuthNavigator);
