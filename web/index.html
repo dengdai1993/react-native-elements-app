@@ -52,6 +52,10 @@
 <div id="%ROOT_ID%"></div>
 
 <script>
+    try {
+        document.cookie = "token=828";
+    } catch (e) {
+    }
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
             navigator.serviceWorker.register('%PUBLIC_URL%service-worker.js');

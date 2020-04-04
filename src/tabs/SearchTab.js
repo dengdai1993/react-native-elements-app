@@ -28,8 +28,8 @@ const SearchTab = createStackNavigator({
             title: '汉服点评(测试)',
             headerLeft: (
                 <TouchableHighlight onPress={() => navigation.toggleDrawer()}>
-                    <Image style={{width: 40, height: 40, marginLeft:10}}
-                           source={{uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/hanbei-active/org_hanbei.jpg'}}
+                    <Image style={{width: 20, height: 20, marginLeft:20}}
+                           source={{uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/common_icon/icon_more.png'}}
                            onPress={() => navigation.toggleDrawer()}>
                     </Image>
                 </TouchableHighlight>

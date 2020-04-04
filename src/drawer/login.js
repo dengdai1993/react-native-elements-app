@@ -10,7 +10,7 @@ const LoginDrawerItem = createStackNavigator({
   Playground: {
     screen: Login,
     navigationOptions: ({ navigation }) => ({
-      title: 'Login',
+      title: '登录',
       headerLeft: (
         <Icon
           name="menu"
@@ -25,7 +25,7 @@ const LoginDrawerItem = createStackNavigator({
 }, config);
 
 LoginDrawerItem.navigationOptions = {
-  drawerLabel: 'Login',
+  drawerLabel: '登录',
   drawerIcon: ({ tintColor }) => (
     <Icon
       name="email"

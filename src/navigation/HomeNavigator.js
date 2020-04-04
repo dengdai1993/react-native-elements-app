@@ -46,7 +46,7 @@ const HomeNavigator = createStackNavigator(
 );
 
 HomeNavigator.navigationOptions = {
-  drawerLabel: 'Home',
+  drawerLabel: '首页',
   drawerIcon: ({ tintColor }) => (
     <Icon
       name="home"

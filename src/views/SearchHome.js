@@ -11,7 +11,7 @@ import {
     KeyboardAvoidingView,
     Platform,
     // Slider,
-    Image, ViewPagerAndroid
+    Image, ViewPagerAndroid, Linking
 } from 'react-native';
 import {
     Input,
@@ -77,6 +77,28 @@ class SearchHome extends Component {
     };
 
     componentDidMount() {
+        if (Platform.OS === 'web') {
+            try {
+                let ua = window.navigator.userAgent.toLowerCase();
+                if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                    Linking.getInitialURL().then(url => {
+                        let token = this.getQueryString(url, "token");
+                        if (typeof token !== 'undefined') {
+                            alert(decodeURI(token));
+                        }
+
+                    })
+                }
+            } catch (e) {
+            }
+            // let name = "token";
+            // var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+            // if (arr != null) {
+            //     // alert(unescape(arr[2]))
+            // }
+
+            // Linking.openURL("https://www.baidu.com");
+        }
         // try {
         //     let ua = window.navigator.userAgent.toLowerCase();
         //     alert(ua.match(/MicroMessenger/i) == 'micromessenger')
@@ -86,7 +108,17 @@ class SearchHome extends Component {
         // this.props.navigation.navigate("ProductDetailRoute", {
         //     shopName: "1111"
         // });
-        console.log(this.props)
+    }
+
+    getQueryString(url, name) {
+        var params = [], h;
+        var hash = url.slice(url.indexOf("?") + 1).split('&');
+        console.log(hash);
+        for (var i = 0; i < hash.length; i++) {
+            h = hash[i].split("="); //
+            params[h[0]] = h[1];
+        }
+        return params[name];
     }
 
     startAnimated = () => {
@@ -540,7 +572,6 @@ class SearchHome extends Component {
                             </View>
                         )
                     }
-
                 </ScrollView>
             </KeyboardAvoidingView>
         );
