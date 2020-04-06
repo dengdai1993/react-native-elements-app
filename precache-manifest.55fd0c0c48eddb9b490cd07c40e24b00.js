@@ -1,15 +1,15 @@
 self.__precacheManifest = [
   {
-    "revision": "279f6715d1398fdaa425",
-    "url": "/static/js/app.3d0dbadc.chunk.js"
+    "revision": "7fab84bbc07d28ee77de",
+    "url": "/static/js/app.db53b757.chunk.js"
   },
   {
     "revision": "818911f54acad08a6ef4",
     "url": "/static/js/runtime~app.86c3a96a.js"
   },
   {
-    "revision": "5c64695168682c06e6a7",
-    "url": "/static/js/2.ccfd3683.chunk.js"
+    "revision": "aee9b1ba5d0e4055ea54",
+    "url": "/static/js/2.89ed5f1c.chunk.js"
   },
   {
     "revision": "004c2bbb035d8d06bb830efc4673c886",
@@ -160,6 +160,10 @@ self.__precacheManifest = [
     "url": "/./fonts/FontAwesome5_Solid.ttf"
   },
   {
+    "revision": "d0c694b562b2208635f250762cd7fc79",
+    "url": "/serve.json"
+  },
+  {
     "revision": "48c7ed4e7da9792af288a60d7242d615",
     "url": "/expo-service-worker.js"
   },
@@ -168,11 +172,7 @@ self.__precacheManifest = [
     "url": "/favicon.png"
   },
   {
-    "revision": "d0c694b562b2208635f250762cd7fc79",
-    "url": "/serve.json"
-  },
-  {
-    "revision": "c49b2fce2a9b973bc9b54912a43a8101",
+    "revision": "827700914d9a358418186fc814bfd65b",
     "url": "/index.html"
   },
   {
