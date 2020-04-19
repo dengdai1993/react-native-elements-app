@@ -12,7 +12,7 @@ const ListsDrawerItem = createStackNavigator(
       screen: Lists,
 
       navigationOptions: ({ navigation }) => ({
-        title: 'Lists',
+        title: '后台管理',
         headerLeft: (
           <Icon
             name="menu"
@@ -29,7 +29,7 @@ const ListsDrawerItem = createStackNavigator(
 );
 
 ListsDrawerItem.navigationOptions = {
-  drawerLabel: 'Lists',
+  drawerLabel: '后台管理',
   drawerIcon: ({ tintColor }) => (
     <Icon
       name="list"

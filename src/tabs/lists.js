@@ -17,7 +17,7 @@ const ListsTab = createStackNavigator(
       screen: ListsTabView,
       path: '/',
       navigationOptions: ({ navigation }) => ({
-        title: 'Lists',
+        title: '后台管理',
         headerLeft: (
           <Icon
             name="menu"

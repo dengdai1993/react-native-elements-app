@@ -11,7 +11,7 @@ const RatingsDrawerItem = createStackNavigator({
     screen: Ratings,
 
     navigationOptions: ({ navigation }) => ({
-      title: 'Ratings',
+      title: '意见反馈',
       headerLeft: (
         <Icon
           name="menu"
@@ -26,7 +26,7 @@ const RatingsDrawerItem = createStackNavigator({
 }, config);
 
 RatingsDrawerItem.navigationOptions = {
-  drawerLabel: 'Ratings',
+  drawerLabel: '意见反馈',
   drawerIcon: ({ tintColor }) => (
     <Icon
       name="star"

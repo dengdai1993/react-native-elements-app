@@ -5,8 +5,12 @@
     "description": "A demo app for React Native Elements UI Library",
     "privacy": "public",
     "sdkVersion": "34.0.0",
-    "platforms": ["ios", "android", "web"],
-    "version": "1.1.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.2.0",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/icons/icon.png",
@@ -16,7 +20,6 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.hanfubj.detect"

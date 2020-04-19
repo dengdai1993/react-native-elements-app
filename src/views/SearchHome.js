@@ -25,6 +25,9 @@ import {scaleSize, SCREEN_WIDTH, sp} from "../utils/DimensionUtil";
 import TouchableScale from "react-native-touchable-scale";
 import {LinearGradient} from "../components/LinearGradient";
 import {Slider} from 'react-native-elements';
+import LoginDrawerItem from "../drawer/login";
+import CountTag from "../components/CountTag";
+import * as WebBrowser from 'expo-web-browser';
 
 // const SCREEN_WIDTH = Dimensions.get('window').width;
 
@@ -40,29 +43,6 @@ const dummySearchBarProps = {
         console.log('text1:', dummySearchBarProps.serachKey)
     },
 };
-
-const list2 = [
-    {
-        name: '老店',
-        count: 1,
-    },
-    {
-        name: '放心购',
-        count: 10,
-    },
-    {
-        name: '性价比高',
-        count: 10,
-    },
-    {
-        name: '版型靠谱',
-        count: 10,
-    },
-    {
-        name: '售后有保障',
-        count: 10,
-    },
-];
 
 const TAG_COLORS = []
 
@@ -80,11 +60,12 @@ class SearchHome extends Component {
         if (Platform.OS === 'web') {
             try {
                 let ua = window.navigator.userAgent.toLowerCase();
-                if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+                if (ua.match(/MicroMessenger/i) == 'micromessenger' || true) {
                     Linking.getInitialURL().then(url => {
                         let token = this.getQueryString(url, "token");
                         if (typeof token !== 'undefined') {
-                            alert(decodeURI(token));
+                            constants.token = decodeURI(token);
+                            this.refreshAvatar();
                         }
 
                     })
@@ -108,6 +89,46 @@ class SearchHome extends Component {
         // this.props.navigation.navigate("ProductDetailRoute", {
         //     shopName: "1111"
         // });
+    }
+
+    refreshAvatar() {
+        let body = "token=" + constants.token;
+        fetch(constants.host + constants.workspace + 'api/getUserInfo.php', {
+            method: 'POST',
+            mode: "cors",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: body
+        }).then((response) => response.json()).then(
+            (responseJson) => {
+                if (responseJson.code != 0) {
+                    alert(responseJson.msg)
+                    return
+                }
+                this.props.navigation.setParams({ name:  responseJson.data.userName});
+                this.props.navigation.setParams({ status:  true});
+                this.props.navigation.setParams({ avatar:  responseJson.data.headimgurl});
+                LoginDrawerItem.navigationOptions = {
+                    drawerLabel: '个人信息',
+                    drawerIcon: ({ tintColor }) => (
+                        <Icon
+                            name="email"
+                            size={30}
+                            iconStyle={{
+                                width: 30,
+                                height: 30,
+                            }}
+                            type="material"
+                            color={tintColor}
+                        />
+                    ),
+                };
+            })
+            .catch((error) => {
+                alert(JSON.stringify(error));
+            });
+
     }
 
     getQueryString(url, name) {
@@ -148,7 +169,9 @@ class SearchHome extends Component {
     };
 
     _onSearch = () => {
-        let body = "searchKey=" + this.state.search;
+        // WebBrowser.openBrowserAsync('https://expo.io').then(result => console.log(result));
+
+        let body = "searchKey=" + encodeURIComponent(this.state.search);
         fetch(constants.host + constants.workspace + 'api/search.php', {
             method: 'POST',
             mode: "cors",
@@ -174,6 +197,25 @@ class SearchHome extends Component {
             .catch((error) => {
                 alert(JSON.stringify(error));
             });
+
+        // let body1="search_type=video&highlight=1&keyword=insta360&page=1&jsonp=jsonp&callback=__jp1"
+        // fetch('https://api.bilibili.com/x/web-interface/search/type?context=&page={}&order=&keyword={}&duration=&tids_1=&tids_2=&__refresh__=true&search_type=video&highlight=1&single_column=0&jsonp=jsonp&callback=__jp8'
+        //     , {
+        //     method: 'GET',
+        //     mode: "cors",
+        //     headers: {
+        //         "Referer":"https://search.bilibili.com/all?keyword=insta360&from_source=banner_search",
+        //         "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
+        //     },
+        //
+        //     // body: body1
+        // }).then((response) => response.json()).then(
+        //     (responseJson) => {
+        //         alert(JSON.stringify(responseJson))
+        //     })
+        //     .catch((error) => {
+        //         alert(JSON.stringify(error));
+        //     });
     };
 
     render() {
@@ -191,7 +233,6 @@ class SearchHome extends Component {
                         }}
                     >
                         <View style={styles.headerContainer}>
-                            {/*<Icon color="white" name="search" size={62}/>*/}
                             <Image
                                 source={{uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/hanbei-active/org_hanbei.jpg'}}
                                 style={styles.searchIcon}>
@@ -200,29 +241,6 @@ class SearchHome extends Component {
                             <Text style={styles.heading}>汉服点评</Text>
                         </View>
                     </Animated.View>
-                    {/*<View style={styles.headerContainer}>*/}
-                    {/*    /!*<Icon color="white" name="search" size={62}/>*!/*/}
-                    {/*    <Image*/}
-                    {/*        source={{uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/hanbei-active/org_hanbei.jpg'}}*/}
-                    {/*        style={styles.searchIcon}>*/}
-                    {/*    </Image>*/}
-
-                    {/*    <Text style={styles.heading}>汉服云鉴定</Text>*/}
-                    {/*</View>*/}
-
-
-                    {/*<SearchBar*/}
-                    {/*    placeholder="iOS searchbar"*/}
-                    {/*    platform="ios"*/}
-                    {/*    {...dummySearchBarProps}*/}
-                    {/*/>*/}
-                    {/*<SearchBar*/}
-                    {/*    placeholder="Android searchbar"*/}
-                    {/*    platform="android"*/}
-                    {/*    {...dummySearchBarProps}*/}
-                    {/*/>*/}
-                    {/*alignItems: 'center',*/}
-                    {/*justifyContent: 'center'*/}
                     <View style={{flex: 1, flexDirection: 'row', backgroundColor: '#f5f5f5'}}>
                         <View style={{flex: 1, justifyContent: 'center', backgroundColor: "#f5f5f5"}}>
                             <SearchBar
@@ -234,10 +252,8 @@ class SearchHome extends Component {
                                 value={search}
                             />
                         </View>
-
-                        <View style={{justifyContent: 'center'}}>
+                        <View style={{justifyContent: 'center', marginHorizontal:10}}>
                             <Button
-                                style={{marginRight: 13.33}}
                                 title="云鉴定"
                                 loading={false}
                                 loadingProps={{size: 'small', color: 'white'}}
@@ -246,7 +262,6 @@ class SearchHome extends Component {
                                     borderRadius: 5,
                                 }}
                                 titleStyle={{fontWeight: 'bold', fontSize: 18}}
-                                // containerStyle={{marginVertical: 10, height: 50}}
                                 onPress={() => this._onSearch()}
                                 underlayColor="transparent"
                             />
@@ -264,7 +279,6 @@ class SearchHome extends Component {
                                         marginLeft: 10,
                                         marginRight: 10,
                                         color: '#333333',
-                                        numberOfLines: 2,
                                         flex: 1
                                     }}>合作品牌</Text>
                             </View>
@@ -316,13 +330,6 @@ class SearchHome extends Component {
                                                         种草
                                                     </Text>
                                                 </View>
-                                                {/*<Slider style={{width: "100%", height: 10}}*/}
-                                                {/*        minimumValue={0}*/}
-                                                {/*        maximumValue={100}*/}
-                                                {/*        value={50}*/}
-                                                {/*        minimumTrackTintColor={'red'}*/}
-                                                {/*        maximumTrackTintColor={'green'}*/}
-                                                {/*/>*/}
 
                                                 <View
                                                     style={{
@@ -353,6 +360,39 @@ class SearchHome extends Component {
                                         </View>
                                     </View>
                                 </View>
+
+                                <View
+                                    style={{
+                                        flexDirection: 'column',
+                                        borderColor: '#cccccc',
+                                        borderWidth: 1,
+                                        borderRadius: 5,
+                                        alignItems: 'left',
+                                        marginHorizontal: 10,
+                                        paddingBottom: 10,
+                                        marginBottom: 10,
+                                        marginTop: 15,
+                                        shadowColor: '#cccccc',
+                                        shadowOffset: {width: 3, height: 2},
+                                    }}
+                                >
+                                    <Text
+                                        style={{
+                                            fontSize: scaleSize(30),
+                                            marginVertical: 10,
+                                            fontWeight: '300',
+                                            marginTop: 10,
+                                            marginLeft: 10,
+                                            marginRight: 10,
+                                            color: '#333333',
+                                            numberOfLines: 2,
+                                        }}
+                                    >
+                                        EasyDL分析结果：{that.state.data.aipNlp}
+                                    </Text>
+
+                                </View>
+
                                 <Text
                                     style={{
                                         fontSize: scaleSize(45),
@@ -402,7 +442,7 @@ class SearchHome extends Component {
                                             marginRight: 10
                                         }}
                                     >
-                                        商家点评：十二年老店，同袍的一站式购物中心
+                                        商家点评：{that.state.data.comment}
                                     </Text>
                                 </View>
                                 <View
@@ -444,7 +484,7 @@ class SearchHome extends Component {
                                             marginRight: 3
                                         }}
                                     >
-                                        {list2.map((l, i) => (
+                                        {that.state.data.shopTags ? that.state.data.shopTags.map((l, i) => (
                                             <View
                                                 style={{
                                                     backgroundColor: '#96ea70',
@@ -467,10 +507,12 @@ class SearchHome extends Component {
                                                         marginBottom: 3
                                                     }}
                                                 >
-                                                    {l.name}
+                                                    {l.tagName} {l.tagCount}
                                                 </Text>
+                                                <CountTag style={{}}
+                                                          text={l.agreeCount}/>
                                             </View>
-                                        ))}
+                                        )): null}
                                     </View>
                                 </View>
 
@@ -499,7 +541,7 @@ class SearchHome extends Component {
                                             numberOfLines: 2,
                                         }}
                                     >
-                                        资料文献（{that.state.data.powerTags.join(' | ')}）
+                                        资料文献（{that.state.data.powerTags ? that.state.data.powerTags.join(' | ') : null}）
                                     </Text>
                                     <Text
                                         style={{
@@ -516,12 +558,12 @@ class SearchHome extends Component {
                                     <ScrollView
                                         contentContainerStyle={styles.contentContainer}
                                         horizontal={true}>
-                                        {that.state.data.powerImgs.map((l, i) => (
+                                        {that.state.data.powerImgs ? that.state.data.powerImgs.map((l, i) => (
                                             <Image
                                                 source={{uri: l}}
                                                 style={styles.productRef}>
                                             </Image>
-                                        ))}
+                                        )): null}
                                         {/*<Image*/}
                                         {/*    source={{uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/common_icon/WechatIMG23.jpeg'}}*/}
                                         {/*    style={styles.productRef}>*/}
@@ -590,7 +632,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 40,
-        // backgroundColor: '#616389',
     },
     heading: {
         color: 'black',

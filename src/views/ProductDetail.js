@@ -1,5 +1,16 @@
 import React, {Component} from 'react';
-import {View, ScrollView, StyleSheet, Text, Dimensions, KeyboardAvoidingView, Platform, Image} from 'react-native';
+import {
+    View,
+    ScrollView,
+    StyleSheet,
+    Text,
+    Dimensions,
+    KeyboardAvoidingView,
+    Platform,
+    Image,
+    TouchableWithoutFeedback,
+    Linking
+} from 'react-native';
 import {
     Input,
     SearchBar,
@@ -8,22 +19,9 @@ import {
     ThemeProvider,
 } from 'react-native-elements';
 import constants from '../config/constants'
-import { Header } from 'react-native-elements';
-
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
-const dummySearchBarProps = {
-    showLoading: false,
-    serachKey: "",
-    onFocus: () => console.log('focus'),
-    onBlur: () => console.log('blur'),
-    onCancel: () => console.log('cancel'),
-    onClear: () => console.log('cleared'),
-    onChangeText: text => {
-        dummySearchBarProps.serachKey = text;
-        console.log('text1:', dummySearchBarProps.serachKey)
-    },
-};
+import {Header} from 'react-native-elements';
+import {scaleSize, SCREEN_WIDTH, sp, SCREEN_HEIGHT} from "../utils/DimensionUtil";
+import * as WebBrowser from 'expo-web-browser';
 
 class ProductDetail extends Component {
 
@@ -31,7 +29,12 @@ class ProductDetail extends Component {
         search: ""
     };
 
+    constructor(props) {
+        super(props);
+    }
+
     componentDidMount() {
+
         // try {
         //     let ua = window.navigator.userAgent.toLowerCase();
         //     alert(ua.match(/MicroMessenger/i) == 'micromessenger')
@@ -40,373 +43,116 @@ class ProductDetail extends Component {
         // }
 
         let shopName = this.props.navigation.state.params.shopName
-        alert(shopName)
+        // alert(shopName);
     }
 
 
-    updateSearch = search => {
-        console.log(this.state.search)
-        this.setState({search: search}, () => {
-            console.log(this.state.search)
-        });
+    loginByWChat = () => {
+        if (Platform.OS === 'web') {
+            try {
+                let ua = window.navigator.userAgent.toLowerCase();
+                if (ua.match(/MicroMessenger/i) == 'micromessenger') {
 
-    };
+                    // Linking.openURL("https://app.zxyqwe.com/hanbj/mobile/rpcauth?callback=https%3a%2f%2fdp.hanfubj.com&register=https%3a%2f%2factive.qunliaoweishi.com%2fdetect%2fbackground%2fapi%2fregister4web.php");
+                    WebBrowser.openBrowserAsync("https://app.zxyqwe.com/hanbj/mobile/rpcauth?callback=https%3a%2f%2fdp.hanfubj.com&register=https%3a%2f%2factive.qunliaoweishi.com%2fdetect%2fbackground%2fapi%2fregister4web.php").then(result => console.log(result));
 
-    _onSearch = () => {
-        let body = "searchKey=" + this.state.search;
-        fetch(constants.host + constants.workspace + 'api/search.php', {
-            method: 'POST',
-            mode: "cors",
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: body
-        }).then((response) => response.json()).then(
-            (responseJson) => {
-                if (responseJson.code != 0) {
-                    alert(responseJson.msg)
-                    return
+                    // Linking.openURL("https://app.zxyqwe.com/hanbj/mobile/rpcauth?callback=https%3a%2f%2factive.hanfubj.com%2fdetect&register=https%3a%2f%2factive.qunliaoweishi.com%2fdetect%2fbackground%2fapi%2fregister4web.php");
+                    // Linking.openURL("https://app.zxyqwe.com/hanbj/mobile/rpcauth?callback=https%3a%2f%2fapi.hanfubj.com%2fdetect%2fbackground%2fapi%2ftokenSave.php&register=https%3a%2f%2factive.qunliaoweishi.com%2fdetect%2fbackground%2fapi%2fregister4web.php")
+                    return;
                 }
-                // alert(responseJson.data.shopName)
-                this.props.navigation.navigate("ProductDetailRoute", {
-                    shopName: responseJson.data.shopName
-                });
-            })
-            .catch((error) => {
-                alert(JSON.stringify(error));
-            });
-    };
+            } catch (e) {
+            }
+            alert("请在微信中打开,或选择qq登陆");
+        }
+    }
+
+    loginByQQ = () => {
+        if (Platform.OS === 'web') {
+            try {
+                Linking.openURL("https://active.qunliaoweishi.com/detect/background/qqlogin/index.php");
+            } catch (e) {
+            }
+        }
+    }
+
+    goBack = () => {
+        this.props.navigation.goBack();
+    }
+
 
     render() {
-        const {search} = this.state;
+        let that = this
         return (
             <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior={"padding"} enabled
                                   keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 84}>
-                <Header
-                    placement="left"
-                    leftComponent={{ icon: 'menu', color: '#fff' }}
+                <View
+                    style={{
+                        flex: 1,
+                        width: '100%',
+                        height: SCREEN_HEIGHT,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'column'
+                    }}>
 
-                    centerComponent={{ text: 'MY TITLE', style: { color: '#fff' } }}
-                    rightComponent={{ icon: 'home', color: '#fff' }}
-                />
-                <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
-                    {/*<View style={styles.headerContainer}>*/}
-                    {/*    /!*<Icon color="white" name="search" size={62}/>*!/*/}
-                    {/*    <Image*/}
-                    {/*        source={{uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/hanbei-active/org_hanbei.jpg'}}*/}
-                    {/*        style={styles.searchIcon}>*/}
-                    {/*    </Image>*/}
+                    <View
+                        style={{
+                            flexDirection: 'row',
+                        }}>
+                        <TouchableWithoutFeedback onPress={() => {
+                            that.loginByWChat();
+                        }}>
+                            <View style={{
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                            }}>
+                                <Image
+                                    style={{
+                                        flex: 1,
+                                        width: scaleSize(120),
+                                        height: scaleSize(120),
+                                    }}
+                                    source={{uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/common_icon/icon_weixin.png'}}/>
+                                <Text style={{marginTop: 10, fontSize: sp(15)}}>
+                                    微信登录
+                                </Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={() => {
+                            that.loginByQQ();
+                        }}>
+                            <View style={{
+                                flexDirection: 'column',
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginLeft: (SCREEN_WIDTH - scaleSize(240)) / 3
+                            }}>
+                                <Image
+                                    style={{
+                                        flex: 1,
+                                        width: scaleSize(120),
+                                        height: scaleSize(120),
 
-                    {/*    <Text style={styles.heading}>汉服云鉴定</Text>*/}
-                    {/*</View>*/}
-                    {/*<SearchBar*/}
-                    {/*    placeholder="iOS searchbar"*/}
-                    {/*    platform="ios"*/}
-                    {/*    {...dummySearchBarProps}*/}
-                    {/*/>*/}
-                    {/*<SearchBar*/}
-                    {/*    placeholder="Android searchbar"*/}
-                    {/*    platform="android"*/}
-                    {/*    {...dummySearchBarProps}*/}
-                    {/*/>*/}
-                    {/*alignItems: 'center',*/}
-                    {/*justifyContent: 'center'*/}
-                    <View style={{flex: 1, flexDirection: 'row',backgroundColor:'#f5f5f5'}}>
-                        <View style={{flex: 1, justifyContent: 'center'}}>
-                            <SearchBar
-                                placeholder="输入店家名/淘口令"
-                                platform="ios"
-                                onChangeText={this.updateSearch}
-                                value={search}
-                            />
-                        </View>
-
-                        <View style={{justifyContent: 'center'}}>
-                            <Button
-                                style={{marginRight: 13.33}}
-                                title="云鉴定"
-                                loading={false}
-                                loadingProps={{size: 'small', color: 'white'}}
-                                buttonStyle={{
-                                    backgroundColor: 'rgba(111, 202, 186, 1)',
-                                    borderRadius: 5,
-                                }}
-                                titleStyle={{fontWeight: 'bold', fontSize: 18}}
-                                // containerStyle={{marginVertical: 10, height: 50}}
-                                onPress={() => this._onSearch()}
-                                underlayColor="transparent"
-                            />
-                        </View>
+                                    }}
+                                    source={{uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/common_icon/icon_qq.png'}}/>
+                                <Text style={{marginTop: 10, fontSize: sp(15)}}>
+                                    QQ登录
+                                </Text>
+                            </View>
+                        </TouchableWithoutFeedback>
                     </View>
-                    {/*<SearchBar placeholder="Default searchbar" {...dummySearchBarProps} />*/}
-                    {/*<View*/}
-                    {/*    style={[*/}
-                    {/*        styles.headerContainer,*/}
-                    {/*        {backgroundColor: '#616389', marginTop: 20},*/}
-                    {/*    ]}*/}
-                    {/*>*/}
-                    {/*    <Icon color="white" name="input" size={62}/>*/}
-                    {/*    <Text style={styles.heading}>Inputs</Text>*/}
-                    {/*</View>*/}
-                    {/*<View style={{alignItems: 'center', marginBottom: 16}}>*/}
-                    {/*    <Input*/}
-                    {/*        containerStyle={{width: '90%'}}*/}
-                    {/*        placeholder="Input with label"*/}
-                    {/*        label="LABEL"*/}
-                    {/*        labelStyle={{marginTop: 16}}*/}
-                    {/*    />*/}
-                    {/*    <Input*/}
-                    {/*        containerStyle={styles.inputContainerStyle}*/}
-                    {/*        placeholder="Simple input"*/}
-                    {/*    />*/}
-                    {/*    <Input*/}
-                    {/*        leftIcon={*/}
-                    {/*            <Icon*/}
-                    {/*                name="map-marker"*/}
-                    {/*                type="font-awesome"*/}
-                    {/*                color="#86939e"*/}
-                    {/*                size={25}*/}
-                    {/*            />*/}
-                    {/*        }*/}
-                    {/*        leftIconContainerStyle={{marginLeft: 0, marginRight: 10}}*/}
-                    {/*        containerStyle={styles.inputContainerStyle}*/}
-                    {/*        placeholder="Input with left icon"*/}
-                    {/*    />*/}
-                    {/*    <Input*/}
-                    {/*        rightIcon={*/}
-                    {/*            <Icon*/}
-                    {/*                name="chevron-right"*/}
-                    {/*                type="entypo"*/}
-                    {/*                color="#86939e"*/}
-                    {/*                size={25}*/}
-                    {/*            />*/}
-                    {/*        }*/}
-                    {/*        containerStyle={styles.inputContainerStyle}*/}
-                    {/*        placeholder="Input with right icon"*/}
-                    {/*    />*/}
-                    {/*    <Input*/}
-                    {/*        containerStyle={styles.inputContainerStyle}*/}
-                    {/*        placeholder="Input with error message"*/}
-                    {/*        errorMessage="Invalid input"*/}
-                    {/*    />*/}
-                    {/*    <Input*/}
-                    {/*        containerStyle={[styles.inputContainerStyle]}*/}
-                    {/*        placeholder="Shake input"*/}
-                    {/*        ref={ref => (this.shakeInput = ref)}*/}
-                    {/*        rightIcon={*/}
-                    {/*            <Button*/}
-                    {/*                title="Shake"*/}
-                    {/*                onPress={() => this.shakeInput && this.shakeInput.shake()}*/}
-                    {/*            />*/}
-                    {/*        }*/}
-                    {/*        errorMessage="Shake me on error !"*/}
-                    {/*    />*/}
-                    {/*</View>*/}
-                    {/*<View style={styles.contentView}>*/}
-                    {/*    <View*/}
-                    {/*        style={{*/}
-                    {/*            backgroundColor: '#2F343B',*/}
-                    {/*            width: SCREEN_WIDTH,*/}
-                    {/*            alignItems: 'center',*/}
-                    {/*        }}*/}
-                    {/*    >*/}
-                    {/*        <Text*/}
-                    {/*            style={{*/}
-                    {/*                fontSize: 30,*/}
-                    {/*                marginVertical: 10,*/}
-                    {/*                fontWeight: '300',*/}
-                    {/*                marginTop: 10,*/}
-                    {/*                color: 'white',*/}
-                    {/*            }}*/}
-                    {/*        >*/}
-                    {/*            Login*/}
-                    {/*        </Text>*/}
-                    {/*        <View style={styles.overlay}>*/}
-                    {/*            <View style={styles.triangleLeft}/>*/}
-                    {/*            <Input*/}
-                    {/*                inputContainerStyle={{*/}
-                    {/*                    borderWidth: 1,*/}
-                    {/*                    borderColor: 'white',*/}
-                    {/*                    borderLeftWidth: 0,*/}
-                    {/*                    height: 50,*/}
-                    {/*                    width: SCREEN_WIDTH - 80,*/}
-                    {/*                    backgroundColor: 'white',*/}
-                    {/*                }}*/}
-                    {/*                leftIcon={*/}
-                    {/*                    <Icon name="email-outline" type="material-community" color="black" size={25}/>*/}
-                    {/*                }*/}
-                    {/*                leftIconContainerStyle={{*/}
-                    {/*                    marginRight: 10,*/}
-                    {/*                }}*/}
-                    {/*                containerStyle={{paddingHorizontal: 0}}*/}
-                    {/*                placeholder="Email"*/}
-                    {/*                placeholderTextColor="black"*/}
-                    {/*                autoCapitalize="none"*/}
-                    {/*                autoCorrect={false}*/}
-                    {/*                keyboardAppearance="light"*/}
-                    {/*                keyboardType="email-address"*/}
-                    {/*                returnKeyType="next"*/}
-                    {/*                ref={input => (this.emailInput = input)}*/}
-                    {/*                onSubmitEditing={() => {*/}
-                    {/*                    this.passwordInput.focus();*/}
-                    {/*                }}*/}
-                    {/*                blurOnSubmit={false}*/}
-                    {/*            />*/}
-                    {/*            <View style={styles.triangleRight}/>*/}
-                    {/*        </View>*/}
-                    {/*        <View style={[styles.overlay, {marginBottom: 30, marginTop: 1}]}>*/}
-                    {/*            <View style={styles.triangleLeft}/>*/}
-                    {/*            <Input*/}
-                    {/*                inputContainerStyle={{*/}
-                    {/*                    borderWidth: 1,*/}
-                    {/*                    borderColor: 'white',*/}
-                    {/*                    borderLeftWidth: 0,*/}
-                    {/*                    height: 50,*/}
-                    {/*                    width: SCREEN_WIDTH - 80,*/}
-                    {/*                    backgroundColor: 'white',*/}
-                    {/*                }}*/}
-                    {/*                leftIconContainerStyle={{*/}
-                    {/*                    marginRight: 10,*/}
-                    {/*                }}*/}
-                    {/*                containerStyle={{paddingHorizontal: 0}}*/}
-                    {/*                leftIcon={<Icon name="lock" type="simple-line-icon" color="black" size={25}/>}*/}
-                    {/*                placeholder="Password"*/}
-                    {/*                placeholderTextColor="black"*/}
-                    {/*                autoCapitalize="none"*/}
-                    {/*                keyboardAppearance="light"*/}
-                    {/*                secureTextEntry={true}*/}
-                    {/*                autoCorrect={false}*/}
-                    {/*                keyboardType="default"*/}
-                    {/*                returnKeyType="done"*/}
-                    {/*                ref={input => (this.passwordInput = input)}*/}
-                    {/*                blurOnSubmit={true}*/}
-                    {/*            />*/}
-                    {/*            <View style={styles.triangleRight}/>*/}
-                    {/*        </View>*/}
-                    {/*    </View>*/}
-
-                    {/*    <ThemeProvider*/}
-                    {/*        theme={{*/}
-                    {/*            Input: {*/}
-                    {/*                containerStyle: {*/}
-                    {/*                    width: SCREEN_WIDTH - 50,*/}
-                    {/*                },*/}
-                    {/*                inputContainerStyle: {*/}
-                    {/*                    borderRadius: 40,*/}
-                    {/*                    borderWidth: 1,*/}
-                    {/*                    borderColor: 'rgba(110, 120, 170, 1)',*/}
-                    {/*                    height: 50,*/}
-                    {/*                    marginVertical: 10,*/}
-                    {/*                },*/}
-                    {/*                placeholderTextColor: 'rgba(110, 120, 170, 1)',*/}
-                    {/*                inputStyle: {*/}
-                    {/*                    marginLeft: 10,*/}
-                    {/*                    color: 'white',*/}
-                    {/*                },*/}
-                    {/*                keyboardAppearance: 'light',*/}
-                    {/*                blurOnSubmit: false,*/}
-                    {/*            },*/}
-                    {/*        }}*/}
-                    {/*    >*/}
-                    {/*        <View*/}
-                    {/*            style={{*/}
-                    {/*                backgroundColor: 'rgba(46, 50, 72, 1)',*/}
-                    {/*                width: SCREEN_WIDTH,*/}
-                    {/*                alignItems: 'center',*/}
-                    {/*                paddingBottom: 30,*/}
-                    {/*            }}*/}
-                    {/*        >*/}
-                    {/*            <Text*/}
-                    {/*                style={{*/}
-                    {/*                    color: 'white',*/}
-                    {/*                    fontSize: 30,*/}
-                    {/*                    marginVertical: 10,*/}
-                    {/*                    fontWeight: '300',*/}
-                    {/*                }}*/}
-                    {/*            >*/}
-                    {/*                Sign up*/}
-                    {/*            </Text>*/}
-                    {/*            <Input*/}
-                    {/*                leftIcon={*/}
-                    {/*                    <Icon*/}
-                    {/*                        name="user"*/}
-                    {/*                        type="simple-line-icon"*/}
-                    {/*                        color="rgba(110, 120, 170, 1)"*/}
-                    {/*                        size={25}*/}
-                    {/*                    />*/}
-                    {/*                }*/}
-                    {/*                placeholder="Username"*/}
-                    {/*                autoCapitalize="none"*/}
-                    {/*                autoCorrect={false}*/}
-                    {/*                keyboardType="email-address"*/}
-                    {/*                returnKeyType="next"*/}
-                    {/*                ref={input => (this.usernameInput = input)}*/}
-                    {/*                onSubmitEditing={() => {*/}
-                    {/*                    this.email2Input.focus();*/}
-                    {/*                }}*/}
-                    {/*            />*/}
-                    {/*            <Input*/}
-                    {/*                leftIcon={*/}
-                    {/*                    <Icon*/}
-                    {/*                        name="email-outline"*/}
-                    {/*                        type="material-community"*/}
-                    {/*                        color="rgba(110, 120, 170, 1)"*/}
-                    {/*                        size={25}*/}
-                    {/*                    />*/}
-                    {/*                }*/}
-                    {/*                placeholder="Email"*/}
-                    {/*                autoCapitalize="none"*/}
-                    {/*                autoCorrect={false}*/}
-                    {/*                keyboardType="email-address"*/}
-                    {/*                returnKeyType="next"*/}
-                    {/*                ref={input => (this.email2Input = input)}*/}
-                    {/*                onSubmitEditing={() => {*/}
-                    {/*                    this.password2Input.focus();*/}
-                    {/*                }}*/}
-                    {/*            />*/}
-                    {/*            <Input*/}
-                    {/*                leftIcon={*/}
-                    {/*                    <Icon*/}
-                    {/*                        name="lock"*/}
-                    {/*                        type="simple-line-icon"*/}
-                    {/*                        color="rgba(110, 120, 170, 1)"*/}
-                    {/*                        size={25}*/}
-                    {/*                    />*/}
-                    {/*                }*/}
-                    {/*                placeholder="Password"*/}
-                    {/*                autoCapitalize="none"*/}
-                    {/*                secureTextEntry={true}*/}
-                    {/*                autoCorrect={false}*/}
-                    {/*                keyboardType="default"*/}
-                    {/*                returnKeyType="next"*/}
-                    {/*                ref={input => (this.password2Input = input)}*/}
-                    {/*                onSubmitEditing={() => {*/}
-                    {/*                    this.confirmPassword2Input.focus();*/}
-                    {/*                }}*/}
-                    {/*            />*/}
-                    {/*            <Input*/}
-                    {/*                leftIcon={*/}
-                    {/*                    <Icon*/}
-                    {/*                        name="lock"*/}
-                    {/*                        type="simple-line-icon"*/}
-                    {/*                        color="rgba(110, 120, 170, 1)"*/}
-                    {/*                        size={25}*/}
-                    {/*                    />*/}
-                    {/*                }*/}
-                    {/*                placeholder="Confirm Password"*/}
-                    {/*                autoCapitalize="none"*/}
-                    {/*                keyboardAppearance="light"*/}
-                    {/*                secureTextEntry={true}*/}
-                    {/*                autoCorrect={false}*/}
-                    {/*                keyboardType="default"*/}
-                    {/*                returnKeyType="done"*/}
-                    {/*                ref={input => (this.confirmPassword2Input = input)}*/}
-                    {/*                blurOnSubmit*/}
-                    {/*            />*/}
-                    {/*        </View>*/}
-                    {/*    </ThemeProvider>*/}
-                    {/*</View>*/}
-                </ScrollView>
+                    <View style={{marginTop: 70}}>
+                        <TouchableWithoutFeedback
+                            onPress={this.goBack}>
+                            <Text style={{
+                                fontSize: sp(14)
+                            }}>
+                                我再想想，暂不登录
+                            </Text>
+                        </TouchableWithoutFeedback>
+                    </View>
+                </View>
             </KeyboardAvoidingView>
         );
     }
@@ -420,7 +166,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 40,
-        // backgroundColor: '#616389',
     },
     heading: {
         color: 'black',
