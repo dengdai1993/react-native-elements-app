@@ -1,16 +1,16 @@
 {
   "expo": {
-    "name": "react-native-elements-app",
-    "slug": "react-native-elements-app",
-    "description": "A demo app for React Native Elements UI Library",
+    "name": "汉潮",
+    "slug": "hanbj-dp",
+    "description": "汉潮",
     "privacy": "public",
-    "sdkVersion": "34.0.0",
+    "sdkVersion": "37.0.0",
     "platforms": [
       "ios",
       "android",
       "web"
     ],
-    "version": "1.2.0",
+    "version": "1.2.1",
     "orientation": "portrait",
     "primaryColor": "#cccccc",
     "icon": "./assets/icons/icon.png",
@@ -22,10 +22,18 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.hanfubj.detect"
+      "bundleIdentifier": "com.hanfubj.detect",
+      "buildNumber": "1.2.1"
     },
     "android": {
-      "package": "com.hanfubj.detect"
-    }
+      "package": "com.hanfubj.detect",
+      "versionCode": 1
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js",
+    "androidStatusBar": {
+      "backgroundColor": "#C2185B",
+      "translucent": false
+    },
+
   }
 }

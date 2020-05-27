@@ -5,6 +5,7 @@ import AppLoading from './src/components/AppLoading';
 
 import { cacheImages, cacheFonts } from './src/helpers/AssetsCaching';
 import vectorFonts from './src/helpers/vector-fonts';
+import * as ImageUploader from "./src/utils/ImageUploader";
 
 export default () => {
   const [isReady, setIsReady] = useState(false);
@@ -35,14 +36,16 @@ export default () => {
     await Promise.all([...imageAssets, ...fontAssets]);
   };
 
+  // ImageUploader.init();
   if (!isReady) {
-    return (
-      <AppLoading
-        startAsync={loadAssetsAsync}
-        onFinish={() => setIsReady(true)}
-        onError={console.warn}
-      />
-    );
+    // return (
+    //   <AppLoading
+    //     startAsync={loadAssetsAsync}
+    //     onFinish={() => setIsReady(true)}
+    //     onError={console.warn}
+    //     autoHideSplash={true}
+    //   />
+    // );
   }
 
   return <RootNavigator />;

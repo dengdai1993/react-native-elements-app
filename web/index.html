@@ -7,7 +7,7 @@
 
     <link rel="shortcut icon" href="%WEB_PUBLIC_URL%favicon.png"/>
 
-    <title>汉服点评</title>
+    <title>汉潮</title>
 
     <style>
         html, body {
@@ -50,7 +50,7 @@
 
 <noscript>%NO_SCRIPT%</noscript>
 <div id="%ROOT_ID%"></div>
-
+<script type="text/javascript" src="//api.map.baidu.com/api?v=3.0&ak=vu21GPGWa1KTompUclHlmCPBwOrVArGn"></script>
 <script>
     try {
         document.cookie = "token=828";
@@ -62,6 +62,172 @@
         });
     }
 </script>
+<script type="text/javascript">
+    var mp;
+    function init(lat, lng, level) {
+        console.log("html init")
+        mp = new BMap.Map("customMap", { enableMapClick: false });
+        mp.centerAndZoom(new BMap.Point(lat, lng), level);
+        mp.enableScrollWheelZoom();
 
+
+        // var marker = new BMap.Marker(new BMap.Point(116.404, 39.915)); // 创建点
+        // marker.addEventListener("click",attribute);
+        // mp.addOverlay(marker);
+
+        // addMasker("https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/hanbei-active/wx_server.jpg",30,30,116.405, 39.915)
+
+        mp.addEventListener("zoomend", function(e){
+            let event = new CustomEvent("Event", {"detail":{"target":{"latitude":mp.getCenter().lat
+                        , "longitude": mp.getCenter().lng, "latitudeDelta": mp.getBounds().toSpan().lat
+                    ,"longitudeDelta": mp.getBounds().toSpan().lng},"zoom":mp.getZoom()}});
+            event.initEvent('zoomend', true, true);
+            document.dispatchEvent(event);
+        });
+
+        mp.addEventListener("dragend", function(e){
+            let event = new CustomEvent("Event", {"detail":{"target":{"latitude":mp.getCenter().lat
+                        , "longitude": mp.getCenter().lng, "latitudeDelta": mp.getBounds().toSpan().lat
+                        ,"longitudeDelta": mp.getBounds().toSpan().lng},"zoom":mp.getZoom()}});
+            event.initEvent('zoomend', true, true);
+            document.dispatchEvent(event);
+        });
+
+        document.addEventListener("bridge_refreshMasker", function(e){
+            let event = new CustomEvent("Event", {"detail":{"target":{"latitude":mp.getCenter().lat
+                        , "longitude": mp.getCenter().lng, "latitudeDelta": mp.getBounds().toSpan().lat
+                        ,"longitudeDelta": mp.getBounds().toSpan().lng},"zoom":mp.getZoom()}});
+            event.initEvent('zoomend', true, true);
+            document.dispatchEvent(event);
+        })
+
+        document.addEventListener("bridge_updateMasker", function(e){
+            if (e.detail) {
+                // alert(JSON.stringify(e.detail))
+                refreshMasker(e.detail)
+            }
+        })
+        document.addEventListener("bridge_getCurrentPosition", function (e) {
+            // alert('yyyy');
+            let geolocation = new BMap.Geolocation();
+            geolocation.getCurrentPosition(function(r){
+                // if(this.getStatus() == BMAP_STATUS_SUCCESS){
+                //     var mk = new BMap.Marker(r.point);
+                //     map.addOverlay(mk);
+                //     map.panTo(r.point);
+                //     alert('您的位置：'+r.point.lng+','+r.point.lat);
+                // }
+                // else {
+                //     alert('failed'+this.getStatus());
+                // }
+                // alert('您的位置：' + JSON.stringify(r));
+                let event = new CustomEvent("Event", {"detail":{"latitude":r.point.lat,"longitude":r.point.lng}});
+                event.initEvent('location', true, true);
+                document.dispatchEvent(event);
+            });
+        })
+        document.addEventListener("bridge_updateCenter", function(e){
+            if (e.detail) {
+                mp.centerAndZoom(new BMap.Point(e.detail.lat, e.detail.lng), e.detail.level);
+            }
+        })
+    }
+
+    function clock() {
+
+        var canvasLayer = new BMap.CanvasLayer({
+            update: update
+        });
+
+        function update() {
+            var ctx = this.canvas.getContext("2d");
+
+            if (!ctx) {
+                return;
+            }
+
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+            var temp = {};
+            ctx.fillStyle = "rgba(50, 50, 255, 0.7)";
+            ctx.beginPath();
+            var data = [
+                new BMap.Point(116.297047, 39.979542),
+                new BMap.Point(116.321768, 39.88748),
+                new BMap.Point(116.494243, 39.956539)
+            ];
+
+            for (var i = 0, len = data.length; i < len; i++) {
+                var pixel = mp.pointToPixel(data[i]);
+                ctx.fillRect(pixel.x, pixel.y, 30, 30);
+            }
+        }
+
+        mp.addOverlay(canvasLayer);
+    }
+
+    function addMasker(id, uri,width,height,lng, lat) {
+        console.log("h5->addMasker")
+        var myCompOverlay = new ComplexCustomOverlay(id, uri,width,height,lng, lat);
+        console.log(JSON.stringify(myCompOverlay))
+        mp.addOverlay(myCompOverlay);
+        myCompOverlay.addEventListener('click',function(e){
+            let event = new CustomEvent("Event", {"detail":{"id":myCompOverlay._id}});
+            event.initEvent('onMarkerClick', true, true);
+            document.dispatchEvent(event);
+        });
+    }
+
+    function refreshMasker(maskers) {
+        console.log("h5->refreshMasker")
+        mp.clearOverlays();
+        for (let i = 0, len = maskers.length; i < len; i++) {
+            console.log(JSON.stringify(maskers[i]))
+            addMasker(maskers[i].id, maskers[i].uri, maskers[i].width, maskers[i].height, maskers[i].lng, maskers[i].lat)
+        }
+    }
+
+    function ComplexCustomOverlay(id, uri,width,height,lng, lat){
+        console.log(id, uri,width,height,lng, lat)
+        this._id = id;
+        this._point = new BMap.Point(lng, lat);
+        this._url = uri;
+        this._width = width * 1.5;
+        this._height = height * 1.5;
+    }
+    ComplexCustomOverlay.prototype = new BMap.Overlay();
+    ComplexCustomOverlay.prototype.initialize = function(map){
+        this._map = map;
+        var div = this._div = document.createElement("div");
+        div.style.position = "absolute";
+        div.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+        div.style.background = "url(" + this._url + ") no-repeat";
+        div.style.backgroundSize = 'contain'
+        div.style.width = this._width + "px" ;
+        div.style.height = this._height + "px";
+        div.style.MozUserSelect = "none";
+        var arrow = this._arrow = document.createElement("div");
+        // arrow.style.background = "url(//map.baidu.com/fwmap/upload/r/map/fwmap/static/house/images/label.png) no-repeat";
+        arrow.style.position = "absolute";
+        arrow.style.width = "11px";
+        arrow.style.height = "10px";
+        arrow.style.top = "22px";
+        arrow.style.left = "10px";
+        arrow.style.overflow = "hidden";
+        div.appendChild(arrow);
+        mp.getPanes().labelPane.appendChild(div);
+        return div;
+    }
+    ComplexCustomOverlay.prototype.draw = function(){
+        var map = this._map;
+        var pixel = map.pointToOverlayPixel(this._point);
+        this._div.style.left = pixel.x - parseInt(this._arrow.style.left) + "px";
+        this._div.style.top  = pixel.y - 30 + "px";
+    }
+    ComplexCustomOverlay.prototype.addEventListener = function(event,fun){
+        console.log(this._div)
+        this._div['on'+event] = fun;
+    }
+</script>
 </body>
 </html>

@@ -45,20 +45,26 @@ const HomeNavigator = createStackNavigator(
   }
 );
 
-HomeNavigator.navigationOptions = {
-  drawerLabel: '首页',
-  drawerIcon: ({ tintColor }) => (
-    <Icon
-      name="home"
-      size={30}
-      iconStyle={{
-        width: 30,
-        height: 30,
-      }}
-      type="material"
-      color={tintColor}
-    />
-  ),
-};
+// HomeNavigator.navigationOptions = {
+//   drawerLabel: '首页',
+//   drawerIcon: ({ tintColor }) => (
+//     <Icon
+//       name="home"
+//       size={30}
+//       iconStyle={{
+//         width: 30,
+//         height: 30,
+//       }}
+//       type="material"
+//       color={tintColor}
+//     />
+//   ),
+// };
 
+HomeNavigator.navigationOptions = ({navigation}) => {
+  //  关键这一行设置 header:null
+  return{
+    header: null,
+  }
+};
 export default HomeNavigator;

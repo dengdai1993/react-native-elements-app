@@ -27,9 +27,12 @@ import {LinearGradient} from "../components/LinearGradient";
 import {Slider} from 'react-native-elements';
 import LoginDrawerItem from "../drawer/login";
 import CountTag from "../components/CountTag";
-import * as WebBrowser from 'expo-web-browser';
+// import BaiduMap from "../components/map/BaiduMap";
 
-// const SCREEN_WIDTH = Dimensions.get('window').width;
+// let { MapView, MapTypes, Geolocation, Overlay, MapApp } = Platform.OS === "web" ?
+//     {MapView: null,MapTypes: null, Geolocation: null, Overlay: null, MapApp: null} : require('react-native-baidu-map')
+// let { BaiduMapManager } = Platform.OS === "web" ?
+//     {BaiduMapManager: null} : require('react-native-baidu-map')
 
 const dummySearchBarProps = {
     showLoading: false,
@@ -44,9 +47,6 @@ const dummySearchBarProps = {
     },
 };
 
-const TAG_COLORS = []
-
-
 class SearchHome extends Component {
 
     state = {
@@ -55,6 +55,10 @@ class SearchHome extends Component {
         logoHeight: new Animated.Value(200),  // 透明度初始值设为0
         data: null,
     };
+
+    componentWillMount() {
+       // BaiduMap.init();
+    }
 
     componentDidMount() {
         if (Platform.OS === 'web') {
@@ -72,6 +76,9 @@ class SearchHome extends Component {
                 }
             } catch (e) {
             }
+            // document.write(init(116.297047, 39.979542, 12))
+            // document.write(addMasker())
+
             // let name = "token";
             // var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
             // if (arr != null) {
@@ -79,6 +86,8 @@ class SearchHome extends Component {
             // }
 
             // Linking.openURL("https://www.baidu.com");
+        } else if (Platform.OS === 'ios') {
+            // BaiduMapManager.initSDK('sIMQlfmOXhQmPLF1QMh4aBp8zZO9Lb2A');
         }
         // try {
         //     let ua = window.navigator.userAgent.toLowerCase();
@@ -89,6 +98,7 @@ class SearchHome extends Component {
         // this.props.navigation.navigate("ProductDetailRoute", {
         //     shopName: "1111"
         // });
+
     }
 
     refreshAvatar() {
@@ -106,12 +116,12 @@ class SearchHome extends Component {
                     alert(responseJson.msg)
                     return
                 }
-                this.props.navigation.setParams({ name:  responseJson.data.userName});
-                this.props.navigation.setParams({ status:  true});
-                this.props.navigation.setParams({ avatar:  responseJson.data.headimgurl});
+                this.props.navigation.setParams({name: responseJson.data.userName});
+                this.props.navigation.setParams({status: true});
+                this.props.navigation.setParams({avatar: responseJson.data.headimgurl});
                 LoginDrawerItem.navigationOptions = {
                     drawerLabel: '个人信息',
-                    drawerIcon: ({ tintColor }) => (
+                    drawerIcon: ({tintColor}) => (
                         <Icon
                             name="email"
                             size={30}
@@ -165,12 +175,10 @@ class SearchHome extends Component {
         this.setState({search: search}, () => {
             console.log(this.state.search)
         });
-
     };
 
     _onSearch = () => {
         // WebBrowser.openBrowserAsync('https://expo.io').then(result => console.log(result));
-
         let body = "searchKey=" + encodeURIComponent(this.state.search);
         fetch(constants.host + constants.workspace + 'api/search.php', {
             method: 'POST',
@@ -189,41 +197,36 @@ class SearchHome extends Component {
                 this.setState({
                     data: responseJson.data,
                 })
-                // alert(responseJson.data.shopName)
-                // this.props.navigation.navigate("ProductDetailRoute", {
-                //     shopName: responseJson.data.shopName
-                // });
             })
             .catch((error) => {
                 alert(JSON.stringify(error));
             });
-
-        // let body1="search_type=video&highlight=1&keyword=insta360&page=1&jsonp=jsonp&callback=__jp1"
-        // fetch('https://api.bilibili.com/x/web-interface/search/type?context=&page={}&order=&keyword={}&duration=&tids_1=&tids_2=&__refresh__=true&search_type=video&highlight=1&single_column=0&jsonp=jsonp&callback=__jp8'
-        //     , {
-        //     method: 'GET',
-        //     mode: "cors",
-        //     headers: {
-        //         "Referer":"https://search.bilibili.com/all?keyword=insta360&from_source=banner_search",
-        //         "User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/75.0.3770.100 Safari/537.36",
-        //     },
-        //
-        //     // body: body1
-        // }).then((response) => response.json()).then(
-        //     (responseJson) => {
-        //         alert(JSON.stringify(responseJson))
-        //     })
-        //     .catch((error) => {
-        //         alert(JSON.stringify(error));
-        //     });
     };
 
+// <Image
+// source={{uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/hanbei-active/org_hanbei.jpg'}}
+// style={styles.searchIcon}>
+// </Image>
+// <Overlay.Marker style={{width:20,height:20}} rotate={45} icon={{ uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/hanbei-active/org_hanbei.jpg' }} location={{ longitude: 113.975453, latitude: 22.510045 }} />
+// <Overlay.Marker location={{ longitude: 113.969453, latitude: 22.530045 }}/>
     render() {
         var that = this
         const {search, fadeInOpacity, logoHeight} = this.state;
         return (
             <KeyboardAvoidingView style={styles.keyboardAvoidingView} behavior={"padding"} enabled
                                   keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 84}>
+
+                {/*{Platform.OS === 'web' ? <div id='customMap' style={{width: "100%", height: 200}}/> :*/}
+                {/*    <MapView center={{ longitude: 113.969453, latitude: 22.530045 }} style={{width: "100%", height: 200}}>*/}
+                {/*        /!*<Overlay.Marker style={{width:20,height:20}} icon={{ uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/hanbei-active/org_hanbei.jpg' }} location={{ longitude: 113.975453, latitude: 22.510045 }} />*!/*/}
+                {/*        <Overlay.Marker style={{width:20,height:20}} icon={require('../images/logo.png')} location={{ longitude: 113.969453, latitude: 22.530045 }}/>*/}
+                {/*        /!*<Overlay.Marker rotate={45} icon={{ uri: 'https://mapopen-website-wiki.cdn.bcebos.com/homePage/images/logox1.png' }} location={{ longitude: 113.975453, latitude: 22.510045 }} />*!/*/}
+                {/*    </MapView>*/}
+                {/*}*/}
+                {/*<BaiduMap ref={ref => this.baiduMap = ref}*/}
+                {/*lat={116.297047} lng={39.979542} level={15}*/}
+                {/*moveCallback={(result) => this.fetchSignData(result)}/>*/}
+
                 <ScrollView style={styles.container} keyboardShouldPersistTaps="handled">
                     <Animated.View                       // 使用专门的可动画化的View组件
                         style={{
@@ -238,7 +241,7 @@ class SearchHome extends Component {
                                 style={styles.searchIcon}>
                             </Image>
 
-                            <Text style={styles.heading}>汉服点评</Text>
+                            <Text style={styles.heading}>汉服</Text>
                         </View>
                     </Animated.View>
                     <View style={{flex: 1, flexDirection: 'row', backgroundColor: '#f5f5f5'}}>
@@ -252,7 +255,7 @@ class SearchHome extends Component {
                                 value={search}
                             />
                         </View>
-                        <View style={{justifyContent: 'center', marginHorizontal:10}}>
+                        <View style={{justifyContent: 'center', marginHorizontal: 10}}>
                             <Button
                                 title="云鉴定"
                                 loading={false}
@@ -336,7 +339,7 @@ class SearchHome extends Component {
                                                         flexDirection: 'column',
                                                         backgroundColor: '#cccccc',
                                                         borderRadius: 5,
-                                                        alignItems: 'left',
+                                                        alignItems: 'flex-start',
                                                         height: 5
                                                     }}
                                                 >
@@ -346,7 +349,7 @@ class SearchHome extends Component {
                                                             height: '100%',
                                                             backgroundColor: '#00ff00',
                                                             borderRadius: 5,
-                                                            alignItems: 'left',
+                                                            alignItems: 'flex-start',
                                                         }}
                                                     >
                                                     </View>
@@ -367,7 +370,7 @@ class SearchHome extends Component {
                                         borderColor: '#cccccc',
                                         borderWidth: 1,
                                         borderRadius: 5,
-                                        alignItems: 'left',
+                                        alignItems: 'flex-start',
                                         marginHorizontal: 10,
                                         paddingBottom: 10,
                                         marginBottom: 10,
@@ -388,7 +391,7 @@ class SearchHome extends Component {
                                             numberOfLines: 2,
                                         }}
                                     >
-                                        EasyDL分析结果：{that.state.data.aipNlp}
+                                        EasyDL分析结果：{that.state.data.aipNlp}（0%-100%，越接近100，有问题的可能性越小）
                                     </Text>
 
                                 </View>
@@ -426,7 +429,7 @@ class SearchHome extends Component {
                                         flexDirection: 'column',
                                         backgroundColor: '#96ea70',
                                         borderRadius: 5,
-                                        alignItems: 'left',
+                                        alignItems: 'flex-start',
                                         marginLeft: 10,
                                         marginRight: 10,
                                     }}
@@ -451,7 +454,7 @@ class SearchHome extends Component {
                                         borderColor: '#cccccc',
                                         borderWidth: 1,
                                         borderRadius: 5,
-                                        alignItems: 'left',
+                                        alignItems: 'flex-start',
                                         marginHorizontal: 10,
                                         paddingBottom: 10,
                                         marginBottom: 10,
@@ -477,7 +480,7 @@ class SearchHome extends Component {
                                     <View
                                         style={{
                                             flexDirection: 'row',
-                                            alignItems: 'left',
+                                            alignItems: 'flex-start',
                                             marginTop: 2,
                                             flexWrap: "wrap",
                                             marginLeft: 3,
@@ -489,7 +492,7 @@ class SearchHome extends Component {
                                                 style={{
                                                     backgroundColor: '#96ea70',
                                                     borderRadius: 5,
-                                                    alignItems: 'left',
+                                                    alignItems: 'flex-start',
                                                     marginLeft: 2,
                                                     marginRight: 2,
                                                     marginTop: 2,
@@ -512,7 +515,7 @@ class SearchHome extends Component {
                                                 <CountTag style={{}}
                                                           text={l.agreeCount}/>
                                             </View>
-                                        )): null}
+                                        )) : null}
                                     </View>
                                 </View>
 
@@ -563,7 +566,7 @@ class SearchHome extends Component {
                                                 source={{uri: l}}
                                                 style={styles.productRef}>
                                             </Image>
-                                        )): null}
+                                        )) : null}
                                         {/*<Image*/}
                                         {/*    source={{uri: 'https://hanbei-1256982553.cos.ap-chengdu.myqcloud.com/common_icon/WechatIMG23.jpeg'}}*/}
                                         {/*    style={styles.productRef}>*/}
@@ -588,7 +591,7 @@ class SearchHome extends Component {
                                         borderColor: '#cccccc',
                                         borderWidth: 1,
                                         borderRadius: 5,
-                                        alignItems: 'left',
+                                        alignItems: 'flex-start',
                                         marginHorizontal: 10,
                                         paddingBottom: 10,
                                         marginBottom: 10,

@@ -1,5 +1,14 @@
 import React from 'react';
-import {View, Image, Dimensions, SafeAreaView, TextInput, StyleSheet, TouchableWithoutFeedback} from 'react-native';
+import {
+    View,
+    Image,
+    Dimensions,
+    SafeAreaView,
+    TextInput,
+    StyleSheet,
+    TouchableWithoutFeedback,
+    StatusBar
+} from 'react-native';
 import {
     createDrawerNavigator,
     DrawerNavigatorItems,
@@ -14,6 +23,7 @@ import FontsDrawerItem from '../drawer/Fonts';
 import {SCREEN_HEIGHT, SCREEN_WIDTH} from "../utils/DimensionUtil";
 import {Button, ButtonGroup, Text} from "react-native-elements";
 import Dialog from "../components/Dialog";
+import Constants from 'expo-constants';
 
 const WINDOW_WIDTH = Dimensions.get('window').width;
 
@@ -84,8 +94,12 @@ const DrawerNavigator = createDrawerNavigator(
         },
         drawerWidth: Math.min(WINDOW_WIDTH * 0.8, 300),
         contentComponent: customContentComponent,
+        navigationOptions: {
+            headerStyle: {
+                marginTop: Constants.statusBarHeight
+            }
+        }
     }
 );
-
 
 export default DrawerNavigator;

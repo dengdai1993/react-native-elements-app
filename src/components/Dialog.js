@@ -76,7 +76,7 @@ export default class Dialog extends React.Component {
                     this.props.contentStyle,
                     {
                         left:this.margin,
-                        width:width - 2 * this.margin }] }>
+                        width:width - 2 * this.margin}] }>
                     {this.props.children}
                 </View>
 

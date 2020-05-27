@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>汉潮</string>
+	<key>CFBundleExecutable</key>
+	<string>$(EXECUTABLE_NAME)</string>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>$(PRODUCT_NAME)</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.2.2</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>1.2.2</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>localhost</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+			</dict>
+		</dict>
+	</dict>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Allow hanbj-dp to access your calendar</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow hanbj-dp to use the camera</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Allow hanbj-dp experiences to access your contacts</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Allow hanbj-dp to use your location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow hanbj-dp to use your location</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Allow hanbj-dp to use your location</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow hanbj-dp to access your microphone</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Allow hanbj-dp to access your device&apos;s accelerometer</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Give hanbj-dp periences permission to save photos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Give $(PRODUCT_NAME) permission to save photos</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Allow hanbj-dp to access your reminders</string>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>armv7</string>
+	</array>
+	<key>UIRequiresFullScreen</key>
+	<true/>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<false/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>baidumap</string>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
+	<key>LSApplicationQueriesSchemes</key>
+    <array>
+        <!-- 微信 URL Scheme 白名单-->
+        <string>wechat</string>
+        <string>weixin</string>
+
+        <!-- 新浪微博 URL Scheme 白名单-->
+        <string>sinaweibohd</string>
+        <string>sinaweibo</string>
+        <string>sinaweibosso</string>
+        <string>weibosdk</string>
+        <string>weibosdk2.5</string>
+
+        <!-- QQ、Qzone URL Scheme 白名单-->
+        <string>mqqapi</string>
+        <string>mqq</string>
+        <string>mqqOpensdkSSoLogin</string>
+        <string>mqqconnect</string>
+        <string>mqqopensdkdataline</string>
+        <string>mqqopensdkgrouptribeshare</string>
+        <string>mqqopensdkfriend</string>
+        <string>mqqopensdkapi</string>
+        <string>mqqopensdkapiV2</string>
+        <string>mqqopensdkapiV3</string>
+        <string>mqqopensdkapiV4</string>
+        <string>mqzoneopensdk</string>
+        <string>wtloginmqq</string>
+        <string>wtloginmqq2</string>
+        <string>mqqwpa</string>
+        <string>mqzone</string>
+        <string>mqzonev2</string>
+        <string>mqzoneshare</string>
+        <string>wtloginqzone</string>
+        <string>mqzonewx</string>
+        <string>mqzoneopensdkapiV2</string>
+        <string>mqzoneopensdkapi19</string>
+        <string>mqzoneopensdkapi</string>
+        <string>mqqbrowser</string>
+        <string>mttbrowser</string>
+
+        <!-- Facebook URL Scheme 白名单-->
+        <string>fbapi</string>
+        <string>fb-messenger-api</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
+    </array>
+    <!-- 配置允许 http 的任意网络 End-->
+       <key>NSExceptionDomains</key>
+       <dict>
+           <!-- 集成新浪微博对应的 HTTP 白名单-->
+           <key>sina.com.cn</key>
+           <dict>
+               <key>NSIncludesSubdomains</key>
+               <true/>
+               <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+               <true/>
+               <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+               <false/>
+           </dict>
+           <key>sinaimg.cn</key>
+           <dict>
+               <key>NSIncludesSubdomains</key>
+               <true/>
+               <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+               <true/>
+               <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+               <false/>
+           </dict>
+           <key>sinajs.cn</key>
+           <dict>
+               <key>NSIncludesSubdomains</key>
+               <true/>
+               <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+               <true/>
+               <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+               <false/>
+           </dict>
+           <key>sina.cn</key>
+           <dict>
+               <!-- 适配 iOS10 -->
+               <key>NSExceptionMinimumTLSVersion</key>
+               <string>TLSv1.0</string>
+               <key>NSIncludesSubdomains</key>
+               <true/>
+               <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+               <false/>
+           </dict>
+           <key>weibo.cn</key>
+           <dict>
+               <!-- 适配 iOS10 -->
+               <key>NSExceptionMinimumTLSVersion</key>
+               <string>TLSv1.0</string>
+               <key>NSIncludesSubdomains</key>
+               <true/>
+               <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+               <false/>
+           </dict>
+           <key>weibo.com</key>
+           <dict>
+               <!-- 适配 iOS10 -->
+               <key>NSExceptionMinimumTLSVersion</key>
+               <string>TLSv1.0</string>
+               <key>NSIncludesSubdomains</key>
+               <true/>
+               <key>NSThirdPartyExceptionAllowsInsecureHTTPLoads</key>
+               <true/>
+               <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+               <false/>
+           </dict>
+           <!-- 新浪微博-->
+       </dict>
+</dict>
+</plist>

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {createStackNavigator} from 'react-navigation-stack';
-import {Icon} from 'react-native-elements';
 
 import SearchHome from '../views/SearchHome';
 import InputDetails from '../views/input_details';
@@ -18,9 +17,6 @@ import {
     Linking,
     StyleSheet
 } from "react-native";
-import {TouchableOpacity} from "react-native-gesture-handler";
-import {SCREEN_HEIGHT} from "../utils/DimensionUtil";
-import Dialog from "../components/Dialog";
 import ProductDetail from "../views/ProductDetail";
 
 const InputTabView = ({navigation}) => <SearchHome navigation={navigation}/>;
@@ -37,7 +33,8 @@ const SearchTab = createStackNavigator({
         screen: InputTabView,
         path: '/',
         navigationOptions: ({navigation}) => ({
-            title: navigation.getParam('status') ? '汉服点评(测试)' : '汉服点评(测试)',
+            header: null,
+            title: navigation.getParam('status') ? '汉服(测试)' : '汉服(测试)',
             headerLeft: (
                 <TouchableHighlight onPress={() => {
                     navigation.toggleDrawer();
@@ -55,7 +52,6 @@ const SearchTab = createStackNavigator({
                            onPress={() => navigation.toggleDrawer()}>
                     </Image>
                 </TouchableHighlight>
-
 
             ),
             headerRight: (<TouchableWithoutFeedback onPress={() => {
